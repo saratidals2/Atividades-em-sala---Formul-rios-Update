@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{ biblio }}</h1>
+    <table> 
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Ano de lançamento</th>
+            </tr>
+        </thead>
+        <tbody> {% for livro in biblio %} 
+            <tr>
+                <td>
+                    {{ livro.isbn }}
+                </td>
+                <td>
+                    {{ livro.titulo }}
+                </td>
+                <td>
+                    {{ livro.autor }}
+                </td>
+                <td>
+                    {{ livro.anodelancamento }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <form action="/salvar_livro" method="POST">
+        Título: <input type="text" name="titulo"><br><br>
+        Autor: <input type="text" name="autor"><br><br>
+        Ano: <input type="number" name="ano"><br><br>
+    
+        <input type="submit" value="Cadastrar">
+    </form>
+</body>
+</html>

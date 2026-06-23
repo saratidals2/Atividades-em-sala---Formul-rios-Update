@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, request
 import dados
 
 app = Flask(__name__)
@@ -50,8 +50,29 @@ def atualizar_livro():
 
     return biblioteca()
 
+@app.route("/api/biblio")
+def listar_livro():
+    lista = dados.carregar_do_arquivo()
+    return  jsonify(lista)
 
+@app.route("/api/criar", methods= ['POST'])
+def criar_livro(): 
+    lista = dados.carregar_do_arquivo()
+    novo_livro = request.get_json()
+    lista.append(novo_livro)
+    dados.salvar_no_arquivo(lista)
+    return "Livro Cadastrado", 201
 
+@app.route("/api/deletar/<id>", methods=['DELETE'])
+def deletar_livros(id = None):
+    lista = dados.carregar_do_arquivo()
+    for livro in lista:
+        if livro["id"] == id:
+            lista.remove(livro)
+    dados.salvar_no_arquivo(lista)  
+    return "Livro deletado", 203
+
+@app.route("/api/alterar/<id>")      
 if __name__ == "__main__":
     app.run()
 
